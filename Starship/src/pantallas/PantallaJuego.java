@@ -9,8 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.SwingUtilities;
@@ -73,15 +71,14 @@ public class PantallaJuego implements IPantalla, KeyListener{
 		}
 		tank.pintarSpriteEnMundo(g,tankAngle);
 		canon.pintarSpriteEnMundo2(g,canonAngle);
-		tankEnemigo.pintarSpriteEnMundo(g,tankAngle);
-		canonEnemigo.pintarSpriteEnMundo2(g,canonAngle);
+		tankEnemigo.pintarSpriteEnMundo(g,-90);
+		canonEnemigo.pintarSpriteEnMundo2(g,(int) Math.toDegrees(Math.atan2((tankEnemigo.getPosY() - tank.getPosY()), (tankEnemigo.getPosX() - tank.getPosX()))));
 	}
 
 	@Override
 	public void ejecutarFrame() {
 		// TODO Auto-generated method stub
-		//checkCollisions();
-		//checkCollisionstank();
+		checkCollisions();
 		moverSprites();
 	}
 
@@ -124,35 +121,19 @@ public class PantallaJuego implements IPantalla, KeyListener{
 		}
 		
 	}
-	/*
+	
 	private void checkCollisions() {
-		 
-		for (int i = 0; i < asteroides.size() && disparo != null; i++) {
-			if (asteroides.get(i).colisiona(disparo)) {
+		if (disparo != null) {
+			if (tankEnemigo.colisiona(disparo)) {
 				disparo = null;
-				asteroides.remove(i);
 				panelJuego.puntuacion++;
-				if (asteroides.size() <= 0) {
-					PantallaNivel pantallaNivel = new PantallaNivel(panelJuego);
-					pantallaNivel.inicializarPantalla();
-					panelJuego.setPantallaActual(pantallaNivel);
-				}
+				PantallaCongratulations pantallaCongratulations = new PantallaCongratulations(panelJuego);
+				pantallaCongratulations.inicializarPantalla();
+				panelJuego.setPantallaActual(pantallaCongratulations);
 			}
 		}
 	}
-	*/
-	/*
-	private void checkCollisionstank() {
-		 
-		for (int i = 0; i < asteroides.size(); i++) {
-			if (asteroides.get(i).colisiona(tank)) {
-				PantallaGameOver pantallaGameOver = new PantallaGameOver(panelJuego);
-				pantallaGameOver.inicializarPantalla();
-				panelJuego.setPantallaActual(pantallaGameOver);
-			}
-		}
-	}
-	*/
+	
 	public void rescaleImage() {
 		rescaledImage = image.getScaledInstance(panelJuego.getWidth(), panelJuego.getHeight(), Image.SCALE_SMOOTH);
 	}

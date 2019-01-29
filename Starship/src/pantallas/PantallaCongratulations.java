@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +31,7 @@ public class PantallaCongratulations implements IPantalla{
 	public void inicializarPantalla() {
 		// TODO Auto-generated method stub
 		try {
-			image = ImageIO.read(new File("Imagenes/Imagenes/gameover.jpg"));
+			image = ImageIO.read(new File("Recursos/PNG/Environment/dirt.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,10 +43,9 @@ public class PantallaCongratulations implements IPantalla{
 	public void pintarPantalla(Graphics g) {
 		// TODO Auto-generated method stub
 		rellenarFondo(g);
-		g.setColor(new Color(255, 204, 0, 255));
+		g.setColor(new Color(255, 0, 0, 255));
 		g.setFont(new Font("Arial", Font.BOLD, 30));
-		g.drawString("PUNTUACIÓN:    "+Integer.toString(panelJuego.puntuacion), panelJuego.getWidth()/2-125, panelJuego.getHeight()/2+200);
-		g.drawString("ENHORABUENA!", panelJuego.getWidth()/2-125, panelJuego.getHeight()/2+250);
+		g.drawString("LO HAS CONSEGUIDO. ENHORABUENA!", panelJuego.getWidth()/2-300, panelJuego.getHeight()/2);
 	}
 
 	@Override
