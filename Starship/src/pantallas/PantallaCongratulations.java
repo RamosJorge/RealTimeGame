@@ -23,17 +23,14 @@ public class PantallaCongratulations implements IPantalla{
 	Image rescaledImage;
 		
 	public PantallaCongratulations(PanelJuego panelJuego) {
-		// TODO Auto-generated constructor stub
 		this.panelJuego = panelJuego;
 	}
 	
 	@Override
 	public void inicializarPantalla() {
-		// TODO Auto-generated method stub
 		try {
 			image = ImageIO.read(new File("Recursos/PNG/Environment/dirt.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		rescaleImage();
@@ -41,7 +38,6 @@ public class PantallaCongratulations implements IPantalla{
 
 	@Override
 	public void pintarPantalla(Graphics g) {
-		// TODO Auto-generated method stub
 		rellenarFondo(g);
 		g.setColor(new Color(255, 0, 0, 255));
 		g.setFont(new Font("Arial", Font.BOLD, 30));
@@ -50,19 +46,16 @@ public class PantallaCongratulations implements IPantalla{
 
 	@Override
 	public void ejecutarFrame() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void moverRaton(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void pulsarRaton(MouseEvent e) {
-		// TODO Auto-generated method stub
 		PantallaJuego pantallaJuego = new PantallaJuego(panelJuego);
 		pantallaJuego.inicializarPantalla();
 		panelJuego.setPantallaActual(pantallaJuego);
@@ -71,7 +64,6 @@ public class PantallaCongratulations implements IPantalla{
 
 	@Override
 	public void redimensionarPantalla(ComponentEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 	private void rellenarFondo(Graphics g){

@@ -12,34 +12,19 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 
-/**
- * @author jesusredondogarcia
- * Clase Sprite. Representa un elemento pintable y colisionable del juego.
- */
 public class Sprite2D implements ImageObserver {
 	
 	private BufferedImage buffer;
 	private Color color = Color.BLACK;
-	//Variables de dimensi贸n
 	private int ancho;
 	private int alto;
-	//Variables de colocaci贸n
 	private float posX;
 	private float posY;
-	//Variables para la velocidad
 	private double velocidadX;
 	private double velocidadY;
 	private String url;
 	private AffineTransform transform = new AffineTransform();
-	
-	
-	/**
-	 * Constructor simple para un Sprite sin imagen y sin velocidad.
-	 * @param ancho Ancho que ocupa el Sprite (en pixels)
-	 * @param alto Altura que ocupa el Sprite (en pixels)
-	 * @param posX posici贸n horizontal del sprite en el mundo.
-	 * @param posY posici贸n vertical del Sprite en el mundo. El origen se sit煤a en la parte superior.
-	 */
+
 	public Sprite2D(int ancho, int alto, int posX, int posY, String url) {
 		this.ancho = ancho;
 		this.alto = alto;
@@ -48,17 +33,7 @@ public class Sprite2D implements ImageObserver {
 		this.url = url;
 		actualizarBuffer();
 	}
-	
-	
-	/**
-	 * Constructor para un Sprite sin imagen.
-	 * @param ancho Ancho que ocupa el Sprite (en pixels)
-	 * @param alto Altura que ocupa el Sprite (en pixels)
-	 * @param posX posici贸n horizontal del sprite en el mundo.
-	 * @param posY posici贸n vertical del Sprite en el mundo. El origen se sit煤a en la parte superior.
-	 * @param velocidadX velocidad horizontal del Sprite.
-	 * @param velocidadY velocidad vertical del Sprite. 
-	 */
+
 	public Sprite2D(int ancho, int alto, int posX, int posY, int velocidadX, int velocidadY, String url) {
 		this.ancho = ancho;
 		this.alto = alto;
@@ -80,10 +55,6 @@ public class Sprite2D implements ImageObserver {
 		actualizarBuffer();
 	}
 	
-	/**
-	 * M茅todo para actualizar el buffer que guarda cada Sprite.
-	 * Por ahora s贸lo guarda un bufferedImage que est谩 completamente relleno de un color.
-	 */
 	public void actualizarBuffer(){
 		buffer = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = buffer.getGraphics();
@@ -97,23 +68,18 @@ public class Sprite2D implements ImageObserver {
 			g.dispose();
 		}
 	}
-	
-	/**
-	 * M茅todo para mover el Sprite por el mundo.
-	 * @param anchoMundo ancho del mundo sobre el que se mueve el Sprite
-	 * @param altoMundo alto del mundo sobre el que se mueve el Sprite
-	 */
+
 	public void moverSprite(int anchoMundo, int altoMundo){
-		if(posX >= anchoMundo - ancho) { //por la derecha
+		if(posX >= anchoMundo - ancho) {
 			velocidadX = -1  * Math.abs(velocidadX);
 		} 
-		if(posX <= 0){//por la izquierda
+		if(posX <= 0){
 			velocidadX = Math.abs(velocidadX);;
 		}
-		if(posY >= altoMundo -alto){//por abajo
+		if(posY >= altoMundo -alto){
 			velocidadY = -1  * Math.abs(velocidadY);
 		}
-		if(posY <= 0){ //Por arriba
+		if(posY <= 0){
 			velocidadY = Math.abs(velocidadY);;
 		}
 		posX = (float) (posX + velocidadX);
@@ -128,23 +94,21 @@ public class Sprite2D implements ImageObserver {
 	public boolean colisiona(Sprite2D otro) {
 
 		boolean colisionEjeX = false;
-		//緾u醠 m醩 a la izq??:
-		if(posX>otro.posX) { //El de de la izquierda es el otro:
+		if(posX>otro.posX) {
 			if(otro.getPosX()+otro.getAncho() >= posX) {
 				colisionEjeX = true;
 			}
-		}else { //si no yo soy el de la izq.
+		}else {
 			if(posX+ancho >= otro.getPosX()) {
 				colisionEjeX = true;
 			}
 		}
-		//EJE Y
 		boolean colisionEjeY = false;
-		if(posY>otro.posY) { //El de de la izquierda es el otro:
+		if(posY>otro.posY) {
 			if(otro.getPosY()+otro.getAlto() >= posY) {
 				colisionEjeY = true;
 			}
-		}else { //si no yo soy el de la izq.
+		}else {
 			if(posY+alto >= otro.getPosY()) {
 				colisionEjeY = true;
 			}
@@ -152,11 +116,6 @@ public class Sprite2D implements ImageObserver {
 		return colisionEjeX && colisionEjeY;
 	}
 	
-	
-	/**
-	 * M茅todo que pinta el Sprite en el mundo teniendo en cuenta las caracter铆sticas propias del Sprite.
-	 * @param g Es el Graphics del mundo que se utilizar谩 para pintar el Sprite.
-	 */
 	public void pintarSpriteEnMundo(Graphics g, int angulo){
 		Graphics2D g2d = (Graphics2D) g;
 		transform.setToTranslation(posX, posY);
@@ -176,8 +135,6 @@ public class Sprite2D implements ImageObserver {
 		g.drawImage(buffer, (int)posX, (int)posY, null);
 	}
 	
-	
-	//M茅todos para obtener:
 	public int getAncho(){
 		return ancho;
 	}
@@ -206,9 +163,6 @@ public class Sprite2D implements ImageObserver {
 		return velocidadY;
 	}
 	
-	
-	
-	//m茅todos para cambiar:
 	public void setAncho(int ancho){
 		this.ancho = ancho;
 	}
@@ -248,7 +202,6 @@ public class Sprite2D implements ImageObserver {
 
 	@Override
 	public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

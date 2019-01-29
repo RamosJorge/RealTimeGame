@@ -24,17 +24,14 @@ public class PantallaGameOver implements IPantalla{
 	Image rescaledImage;
 		
 	public PantallaGameOver(PanelJuego panelJuego) {
-		// TODO Auto-generated constructor stub
 		this.panelJuego = panelJuego;
 	}
 	
 	@Override
 	public void inicializarPantalla() {
-		// TODO Auto-generated method stub
 		try {
 			image = ImageIO.read(new File("Imagenes/Imagenes/gameover.jpg"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		rescaleImage();
@@ -42,7 +39,6 @@ public class PantallaGameOver implements IPantalla{
 
 	@Override
 	public void pintarPantalla(Graphics g) {
-		// TODO Auto-generated method stub
 		rellenarFondo(g);
 		g.setColor(new Color(255, 204, 0, 255));
 		g.setFont(new Font("Arial", Font.BOLD, 30));
@@ -52,19 +48,16 @@ public class PantallaGameOver implements IPantalla{
 
 	@Override
 	public void ejecutarFrame() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void moverRaton(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void pulsarRaton(MouseEvent e) {
-		// TODO Auto-generated method stub
 		PantallaJuego pantallaJuego = new PantallaJuego(panelJuego);
 		pantallaJuego.inicializarPantalla();
 		panelJuego.setPantallaActual(pantallaJuego);
@@ -73,7 +66,6 @@ public class PantallaGameOver implements IPantalla{
 
 	@Override
 	public void redimensionarPantalla(ComponentEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 	private void rellenarFondo(Graphics g){

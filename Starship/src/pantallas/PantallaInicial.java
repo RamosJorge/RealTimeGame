@@ -27,17 +27,14 @@ public class PantallaInicial implements IPantalla{
 	static final int CAMBIO_COLOR = 5;
 	
 	public PantallaInicial(PanelJuego panelJuego) {
-		// TODO Auto-generated constructor stub
 		this.panelJuego = panelJuego;
 	}
 	
 	@Override
 	public void inicializarPantalla() {
-		// TODO Auto-generated method stub
 		try {
 			image = ImageIO.read(new File("Recursos/PNG/environment/dirt.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		rescaleImage();
@@ -45,13 +42,11 @@ public class PantallaInicial implements IPantalla{
 
 	@Override
 	public void pintarPantalla(Graphics g) {
-		// TODO Auto-generated method stub
 		rellenarFondo(g);
 	}
 
 	@Override
 	public void ejecutarFrame() {
-		// TODO Auto-generated method stub
 		counter++;
 		if (counter % CAMBIO_COLOR == 0) {
 			if (colorLetras.equals(Color.RED)) {
@@ -65,13 +60,11 @@ public class PantallaInicial implements IPantalla{
 
 	@Override
 	public void moverRaton(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void pulsarRaton(MouseEvent e) {
-		// TODO Auto-generated method stub
 		PantallaJuego pantallaJuego = new PantallaJuego(panelJuego);
 		pantallaJuego.inicializarPantalla();
 		panelJuego.setPantallaActual(pantallaJuego);
@@ -80,8 +73,7 @@ public class PantallaInicial implements IPantalla{
 
 	@Override
 	public void redimensionarPantalla(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		//redimensionarPantalla(e);
+		
 	}
 	private void rellenarFondo(Graphics g){
 		g.drawImage(rescaledImage, 0, 0, null);
