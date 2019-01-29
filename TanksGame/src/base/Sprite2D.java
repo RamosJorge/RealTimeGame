@@ -20,8 +20,8 @@ public class Sprite2D implements ImageObserver {
 	private int alto;
 	private float posX;
 	private float posY;
-	private double velocidadX;
-	private double velocidadY;
+	private int velocidadX;
+	private int velocidadY;
 	private String url;
 	private AffineTransform transform = new AffineTransform();
 

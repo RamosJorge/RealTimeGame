@@ -25,8 +25,8 @@ public class PantallaJuego implements IPantalla, KeyListener{
 	
 	private int tankAngle = 0;
 	private int canonAngle = 0;
-	private int tankEnemyAngle = 0;
-	private int canonEnemyAngle = 0;
+	private int tankEnemyAngle = -90;
+	private int canonEnemyAngle = -90;
 	
 	PanelJuego panelJuego;
 	
@@ -36,7 +36,7 @@ public class PantallaJuego implements IPantalla, KeyListener{
 	Sprite2D tank;
 	Sprite2D canon;
 	Sprite2D disparo;
-
+	
 	Sprite2D tankEnemigo;
 	Sprite2D canonEnemigo;
 	Sprite2D disparoEnemigo;
@@ -50,7 +50,7 @@ public class PantallaJuego implements IPantalla, KeyListener{
 	public void inicializarPantalla() {
 		tank = new Sprite2D(50, 50, 50, 500, "Recursos/PNG/Tanks/tankGreen.png");
 		canon = new Sprite2D(10, 40, (int)tank.getPosX()+(tank.getAncho()/2-5), (int)tank.getPosY()-15, "Recursos/PNG/Tanks/barrelGreen_outline.png");
-		tankEnemigo = new Sprite2D(50, 50, 700, 50, "Recursos/PNG/Tanks/tankRed.png");
+		tankEnemigo = new Sprite2D(50, 50, 700, 50, 0, 0, "Recursos/PNG/Tanks/tankRed.png");
 		canonEnemigo = new Sprite2D(10, 40, (int)tankEnemigo.getPosX()+(tankEnemigo.getAncho()/2-5), (int)tankEnemigo.getPosY()-15, "Recursos/PNG/Tanks/barrelRed_outline.png");
 		try {
 			image = ImageIO.read(new File("Recursos/PNG/Environment/sand.png"));
@@ -64,7 +64,7 @@ public class PantallaJuego implements IPantalla, KeyListener{
 	public void pintarPantalla(Graphics g) {
 		rellenarFondo(g);
 		if (disparo != null) {
-			disparo.pintarSpriteEnMundo(g, tankAngle);
+			disparo.pintarSpriteEnMundo(g, canonAngle);
 		}
 		tank.pintarSpriteEnMundo(g,tankAngle);
 		canon.pintarSpriteEnMundo2(g,canonAngle);
@@ -80,14 +80,15 @@ public class PantallaJuego implements IPantalla, KeyListener{
 
 	@Override
 	public void moverRaton(MouseEvent e) {
+		canonAngle = (int) Math.toDegrees(Math.atan2(e.getY()-(tank.getPosY()+tank.getAlto()/2), e.getX()-(tank.getPosX()+tank.getAncho()/2)));
 	}
 
 	@Override
 	public void pulsarRaton(MouseEvent e) {
 		if(SwingUtilities.isLeftMouseButton(e)){
 			if (disparo == null) {
-				disparo = new Sprite2D(16, 40, (int)tank.getPosX()+tank.getAncho()/2-8, (int)tank.getPosY()+tank.getAlto()/2-20, (int)(10*Math.cos(Math.toRadians(tankAngle-90))), (int)(10*Math.sin(Math.toRadians(tankAngle-90))), "Recursos/PNG/Bullets/bulletGreen.png");
-			}
+				disparo = new Sprite2D(16, 40, (int)tank.getPosX()+tank.getAncho()/2-8, (int)tank.getPosY()+tank.getAlto()/2-20, (int)(10*Math.cos(Math.toRadians(canonAngle-90))), (int)(10*Math.sin(Math.toRadians(canonAngle-90))), "Recursos/PNG/Bullets/bulletGreen.png");
+			} 
 		}
 	}
 
@@ -98,22 +99,23 @@ public class PantallaJuego implements IPantalla, KeyListener{
 	}
 
 	private void rellenarFondo(Graphics g){
-
 		g.drawImage(rescaledImage, 0, 0, null);
 	}
 	private void moverSprites(){
-		/*
-		for (int i = 0; i < asteroides.size(); i++) {
-			Sprite aux = asteroides.get(i);
-			aux.moverSprite(panelJuego.getWidth(), panelJuego.getHeight());
-		}*/
+		
+		tankEnemigo.moverSprite(panelJuego.getWidth(), panelJuego.getHeight());
 		if (disparo != null) {
 			disparo.moverDisparo();
 			if (disparo.getPosY()+disparo.getAlto() <= 0) {
 				disparo = null;
+			} else if (disparo.getPosY() >= 600) {
+				disparo = null;
+			} else if (disparo.getPosX()+disparo.getAncho() <= 0) {
+				disparo = null;
+			} else if (disparo.getPosX() >= 800) {
+				disparo = null;
 			}
 		}
-		
 	}
 	
 	private void checkCollisions() {
@@ -147,11 +149,7 @@ public class PantallaJuego implements IPantalla, KeyListener{
 	        	if (tankAngle == 0) {
 	        		tankAngle = 360;
 	        	}
-	        	if (canonAngle == 0) {
-	        		canonAngle = 360;
-	        	}
 	        	tankAngle--;
-	        	canonAngle--;
 	        break;
 	        case KeyEvent.VK_S: 
 	        	s = true; 
@@ -165,12 +163,9 @@ public class PantallaJuego implements IPantalla, KeyListener{
 	        	if (tankAngle == 360) {
 	        		tankAngle = 0;
 	        	}
-	        	if (canonAngle == 360) {
-	        		canonAngle = 0;
-	        	}
 	        	tankAngle++;
-	        	canonAngle++;
 	        break;
+	        /*
 	        case KeyEvent.VK_UP: 
 	        	tankEnemigo.setPosX((float) (tankEnemigo.getPosX()+2*Math.cos(Math.toRadians(tankEnemyAngle-90))));
 	        	tankEnemigo.setPosY((float) (tankEnemigo.getPosY()+2*Math.sin(Math.toRadians(tankEnemyAngle-90))));
@@ -203,6 +198,7 @@ public class PantallaJuego implements IPantalla, KeyListener{
 	        	tankEnemyAngle++;
 	        	canonEnemyAngle++;
 	        break;
+	        */
 	        case KeyEvent.VK_SPACE:
 	        	if (disparo == null) {
 					disparo = new Sprite2D(16, 40, (int)tank.getPosX()+tank.getAncho()/2-8, (int)tank.getPosY()+tank.getAlto()/2-20, (int)(10*Math.cos(Math.toRadians(tankAngle-90))), (int)(10*Math.sin(Math.toRadians(tankAngle-90))), "Recursos/PNG/Bullets/bulletGreen.png");
