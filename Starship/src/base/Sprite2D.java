@@ -24,11 +24,11 @@ public class Sprite2D implements ImageObserver {
 	private int ancho;
 	private int alto;
 	//Variables de colocación
-	private int posX;
-	private int posY;
+	private float posX;
+	private float posY;
 	//Variables para la velocidad
-	private int velocidadX;
-	private int velocidadY;
+	private double velocidadX;
+	private double velocidadY;
 	private String url;
 	private AffineTransform transform = new AffineTransform();
 	
@@ -116,13 +116,13 @@ public class Sprite2D implements ImageObserver {
 		if(posY <= 0){ //Por arriba
 			velocidadY = Math.abs(velocidadY);;
 		}
-		posX = posX + velocidadX;
-		posY = posY + velocidadY;
+		posX = (float) (posX + velocidadX);
+		posY = (float) (posY + velocidadY);
 	}
 	
 	public void moverDisparo() {
-		posX = posX + velocidadX;
-		posY = posY + velocidadY;
+		posX = (float) (posX + velocidadX);
+		posY = (float) (posY + velocidadY);
 	}
 	
 	public boolean colisiona(Sprite2D otro) {
@@ -173,7 +173,7 @@ public class Sprite2D implements ImageObserver {
 	
 	public void pintarDisparoEnMundo(Graphics2D g){
 		g.rotate(Math.toRadians(30), 50, 50);
-		g.drawImage(buffer, posX, posY, null);
+		g.drawImage(buffer, (int)posX, (int)posY, null);
 	}
 	
 	
@@ -186,11 +186,11 @@ public class Sprite2D implements ImageObserver {
 		return alto;
 	}
 	
-	public int getPosX(){
+	public float getPosX(){
 		return posX;
 	}
 	
-	public int getPosY(){
+	public float getPosY(){
 		return posY;
 	}
 	
@@ -198,11 +198,11 @@ public class Sprite2D implements ImageObserver {
 		return buffer;
 	}
 	
-	public int getVelocidadX(){
+	public double getVelocidadX(){
 		return velocidadX;
 	}
 	
-	public int getVelocidadY(){
+	public double getVelocidadY(){
 		return velocidadY;
 	}
 	
@@ -217,12 +217,12 @@ public class Sprite2D implements ImageObserver {
 		this.alto = alto;
 	}
 	
-	public void setPosX(int posX){
-		this.posX = posX;
+	public void setPosX(float f){
+		this.posX = f;
 	}
 	
-	public void setPosY(int posY){
-		this.posY = posY;
+	public void setPosY(float f){
+		this.posY = f;
 	}
 	
 	public void setBuffer(BufferedImage buffer){
