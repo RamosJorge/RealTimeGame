@@ -86,6 +86,23 @@ public class Sprite2D implements ImageObserver {
 		posY = (float) (posY + velocidadY);
 	}
 	
+	public void moverSpriteCanon(int anchoMundo, int altoMundo){
+		if(posX >= anchoMundo -20 - ancho) {
+			velocidadX = -1  * Math.abs(velocidadX);
+		} 
+		if(posX <= 20){
+			velocidadX = Math.abs(velocidadX);;
+		}
+		if(posY >= altoMundo -25 -alto){
+			velocidadY = -1  * Math.abs(velocidadY);
+		}
+		if(posY <= 25){
+			velocidadY = Math.abs(velocidadY);;
+		}
+		posX = (float) (posX + velocidadX);
+		posY = (float) (posY + velocidadY);
+	}
+	
 	public void moverDisparo() {
 		posX = (float) (posX + velocidadX);
 		posY = (float) (posY + velocidadY);

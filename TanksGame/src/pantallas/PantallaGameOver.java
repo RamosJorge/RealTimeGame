@@ -30,7 +30,7 @@ public class PantallaGameOver implements IPantalla{
 	@Override
 	public void inicializarPantalla() {
 		try {
-			image = ImageIO.read(new File("Imagenes/Imagenes/gameover.jpg"));
+			image = ImageIO.read(new File("Recursos/PNG/Environment/dirt.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -42,7 +42,6 @@ public class PantallaGameOver implements IPantalla{
 		rellenarFondo(g);
 		g.setColor(new Color(255, 204, 0, 255));
 		g.setFont(new Font("Arial", Font.BOLD, 30));
-		g.drawString("PUNTUACIÓN:    "+Integer.toString(panelJuego.puntuacion), panelJuego.getWidth()/2-150, panelJuego.getHeight()/2+200);
 		g.drawString("HAS PERDIDO!", panelJuego.getWidth()/2-125, panelJuego.getHeight()/2+250);
 	}
 
@@ -61,7 +60,6 @@ public class PantallaGameOver implements IPantalla{
 		PantallaJuego pantallaJuego = new PantallaJuego(panelJuego);
 		pantallaJuego.inicializarPantalla();
 		panelJuego.setPantallaActual(pantallaJuego);
-		panelJuego.puntuacion = 0;
 	}
 
 	@Override

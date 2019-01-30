@@ -15,9 +15,7 @@ import pantallas.PantallaInicial;
 public class PanelJuego extends JPanel implements Runnable, MouseListener, ComponentListener, MouseMotionListener{
 
 	private static final long serialVersionUID = 1L;
-	
-	public int puntuacion = 0;
-	
+		
 	IPantalla pantallaActual;
 
 	public PanelJuego(){

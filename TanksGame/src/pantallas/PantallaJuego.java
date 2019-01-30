@@ -1,5 +1,7 @@
 package pantallas;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ComponentEvent;
@@ -27,11 +29,19 @@ public class PantallaJuego implements IPantalla, KeyListener{
 	private int canonAngle = 0;
 	private int tankEnemyAngle = -90;
 	private int canonEnemyAngle = -90;
+	private int puntuacion = 0;
+	private int puntuacionEnemigo = 0;
+	
+	private float timerCurrent = 0;
+	private float timerTotal = 5;
 	
 	PanelJuego panelJuego;
 	
-	BufferedImage image;
-	Image rescaledImage;
+	BufferedImage image1;
+	Image rescaledImage1;
+	
+	BufferedImage image2;
+	Image rescaledImage2;
 	
 	Sprite2D tank;
 	Sprite2D canon;
@@ -50,10 +60,11 @@ public class PantallaJuego implements IPantalla, KeyListener{
 	public void inicializarPantalla() {
 		tank = new Sprite2D(50, 50, 50, 500, "Recursos/PNG/Tanks/tankGreen.png");
 		canon = new Sprite2D(10, 40, (int)tank.getPosX()+(tank.getAncho()/2-5), (int)tank.getPosY()-15, "Recursos/PNG/Tanks/barrelGreen_outline.png");
-		tankEnemigo = new Sprite2D(50, 50, 700, 50, 0, 0, "Recursos/PNG/Tanks/tankRed.png");
-		canonEnemigo = new Sprite2D(10, 40, (int)tankEnemigo.getPosX()+(tankEnemigo.getAncho()/2-5), (int)tankEnemigo.getPosY()-15, "Recursos/PNG/Tanks/barrelRed_outline.png");
+		tankEnemigo = new Sprite2D(50, 50, 700, 50, -2, 0, "Recursos/PNG/Tanks/tankRed.png");
+		canonEnemigo = new Sprite2D(10, 40, (int)tankEnemigo.getPosX()+(tankEnemigo.getAncho()/2-5), (int)tankEnemigo.getPosY()-15, -2, 0, "Recursos/PNG/Tanks/barrelRed_outline.png");
 		try {
-			image = ImageIO.read(new File("Recursos/PNG/Environment/sand.png"));
+			image1 = ImageIO.read(new File("Recursos/PNG/Environment/sand.png"));
+			image2 = ImageIO.read(new File("Recursos/PNG/Environment/grass.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -66,10 +77,25 @@ public class PantallaJuego implements IPantalla, KeyListener{
 		if (disparo != null) {
 			disparo.pintarSpriteEnMundo(g, canonAngle);
 		}
+		if (disparoEnemigo != null) {
+			disparoEnemigo.pintarSpriteEnMundo(g, canonEnemyAngle);
+		}
 		tank.pintarSpriteEnMundo(g,tankAngle);
 		canon.pintarSpriteEnMundo2(g,canonAngle);
 		tankEnemigo.pintarSpriteEnMundo(g,tankEnemyAngle);
+		canonEnemyAngle = (int) Math.toDegrees(Math.atan2((tankEnemigo.getPosX()+tankEnemigo.getAncho()/2)-(tank.getPosX()+tank.getAncho()/2),-((tankEnemigo.getPosY()+tankEnemigo.getAlto()/2)-(tank.getPosY()+tank.getAlto()/2))))+180;
 		canonEnemigo.pintarSpriteEnMundo2(g,canonEnemyAngle);
+		g.setColor(new Color(255, 0, 0, 255));
+		g.setFont(new Font("Arial", Font.BOLD, 20));
+		g.drawString("Puntuación: "+Integer.toString(puntuacion), panelJuego.getWidth()-150, panelJuego.getHeight()-20);
+		g.drawString("Puntuación: "+Integer.toString(puntuacionEnemigo), 20, 20);
+		timerCurrent+=0.05;
+		if (timerCurrent >= timerTotal) {
+			if (disparoEnemigo == null) {
+				disparoEnemigo = new Sprite2D(16, 40, (int)tankEnemigo.getPosX()+tankEnemigo.getAncho()/2-8, (int)tankEnemigo.getPosY()+tankEnemigo.getAlto()/2-20, (int)(10*Math.cos(Math.toRadians(canonEnemyAngle-90))), (int)(10*Math.sin(Math.toRadians(canonEnemyAngle-90))), "Recursos/PNG/Bullets/bulletRed.png");
+			}
+			timerCurrent -= timerTotal;
+		}
 	}
 
 	@Override
@@ -80,7 +106,7 @@ public class PantallaJuego implements IPantalla, KeyListener{
 
 	@Override
 	public void moverRaton(MouseEvent e) {
-		canonAngle = (int) Math.toDegrees(Math.atan2(e.getY()-(tank.getPosY()+tank.getAlto()/2), e.getX()-(tank.getPosX()+tank.getAncho()/2)));
+		canonAngle = (int) Math.toDegrees(Math.atan2(e.getX()-tank.getPosX(),-(e.getY()-tank.getPosY())));
 	}
 
 	@Override
@@ -88,7 +114,8 @@ public class PantallaJuego implements IPantalla, KeyListener{
 		if(SwingUtilities.isLeftMouseButton(e)){
 			if (disparo == null) {
 				disparo = new Sprite2D(16, 40, (int)tank.getPosX()+tank.getAncho()/2-8, (int)tank.getPosY()+tank.getAlto()/2-20, (int)(10*Math.cos(Math.toRadians(canonAngle-90))), (int)(10*Math.sin(Math.toRadians(canonAngle-90))), "Recursos/PNG/Bullets/bulletGreen.png");
-			} 
+			}
+			
 		}
 	}
 
@@ -99,11 +126,13 @@ public class PantallaJuego implements IPantalla, KeyListener{
 	}
 
 	private void rellenarFondo(Graphics g){
-		g.drawImage(rescaledImage, 0, 0, null);
+		g.drawImage(rescaledImage2, 0, 0, null);
+		g.drawImage(rescaledImage1, 0, panelJuego.getHeight()/2, null);
 	}
 	private void moverSprites(){
 		
 		tankEnemigo.moverSprite(panelJuego.getWidth(), panelJuego.getHeight());
+		canonEnemigo.moverSpriteCanon(panelJuego.getWidth(), panelJuego.getHeight());
 		if (disparo != null) {
 			disparo.moverDisparo();
 			if (disparo.getPosY()+disparo.getAlto() <= 0) {
@@ -116,22 +145,57 @@ public class PantallaJuego implements IPantalla, KeyListener{
 				disparo = null;
 			}
 		}
+		
+		if (disparoEnemigo != null) {
+			disparoEnemigo.moverDisparo();
+			if (disparoEnemigo.getPosY()+disparoEnemigo.getAlto() <= 0) {
+				disparoEnemigo = null;
+			} else if (disparoEnemigo.getPosY() >= 600) {
+				disparoEnemigo = null;
+			} else if (disparoEnemigo.getPosX()+disparoEnemigo.getAncho() <= 0) {
+				disparoEnemigo = null;
+			} else if (disparoEnemigo.getPosX() >= 800) {
+				disparoEnemigo = null;
+			}
+		}
 	}
 	
 	private void checkCollisions() {
 		if (disparo != null) {
 			if (tankEnemigo.colisiona(disparo)) {
 				disparo = null;
-				panelJuego.puntuacion++;
-				PantallaCongratulations pantallaCongratulations = new PantallaCongratulations(panelJuego);
-				pantallaCongratulations.inicializarPantalla();
-				panelJuego.setPantallaActual(pantallaCongratulations);
+				puntuacion++;
+				if (puntuacion == 5) {
+					PantallaCongratulations pantallaCongratulations = new PantallaCongratulations(panelJuego);
+					pantallaCongratulations.inicializarPantalla();
+					panelJuego.setPantallaActual(pantallaCongratulations);
+				}
+			}
+		}
+		
+		if (disparoEnemigo != null) {
+			if (tank.colisiona(disparoEnemigo)) {
+				disparoEnemigo = null;
+				puntuacionEnemigo++;
+				if (puntuacionEnemigo == 5) {
+					PantallaGameOver pantallaGameOver = new PantallaGameOver(panelJuego);
+					pantallaGameOver.inicializarPantalla();
+					panelJuego.setPantallaActual(pantallaGameOver);
+				}
+			}
+		}
+		
+		if (disparoEnemigo != null && disparo != null) {
+			if (disparo.colisiona(disparoEnemigo)) {
+				disparoEnemigo = null;
+				disparo = null;
 			}
 		}
 	}
 	
 	public void rescaleImage() {
-		rescaledImage = image.getScaledInstance(panelJuego.getWidth(), panelJuego.getHeight(), Image.SCALE_SMOOTH);
+		rescaledImage1 = image1.getScaledInstance(panelJuego.getWidth(), panelJuego.getHeight()/2, Image.SCALE_SMOOTH);
+		rescaledImage2 = image2.getScaledInstance(panelJuego.getWidth(), panelJuego.getHeight()/2, Image.SCALE_SMOOTH);
 	}
 
 	@Override

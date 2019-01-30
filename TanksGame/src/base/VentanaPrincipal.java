@@ -25,7 +25,7 @@ public class VentanaPrincipal {
 	
 	public VentanaPrincipal() {
 		ventana = new JFrame();
-		ventana.setBounds(1920/2-400, 1080/2-300, 800, 600);
+		ventana.setBounds(0, 0, 800, 600);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ventana.setResizable(false);
 	}

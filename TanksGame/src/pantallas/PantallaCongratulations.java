@@ -59,7 +59,6 @@ public class PantallaCongratulations implements IPantalla{
 		PantallaJuego pantallaJuego = new PantallaJuego(panelJuego);
 		pantallaJuego.inicializarPantalla();
 		panelJuego.setPantallaActual(pantallaJuego);
-		panelJuego.puntuacion = 0;
 	}
 
 	@Override
