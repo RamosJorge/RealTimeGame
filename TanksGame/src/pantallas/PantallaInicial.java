@@ -43,6 +43,11 @@ public class PantallaInicial implements IPantalla{
 	@Override
 	public void pintarPantalla(Graphics g) {
 		rellenarFondo(g);
+		g.setColor(new Color(255, 0, 0, 255));
+		g.setFont(new Font("Arial", Font.BOLD, 50));
+		g.drawString("JUEGO DE TANQUES", panelJuego.getWidth()/2-275, panelJuego.getHeight()/2-50);
+		g.setFont(new Font("Arial", Font.BOLD, 20));
+		g.drawString("HAZ CLICK PARA EMPEZAR", panelJuego.getWidth()/2-150, panelJuego.getHeight()/2+100);
 	}
 
 	@Override
