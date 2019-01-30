@@ -40,9 +40,9 @@ public class PantallaGameOver implements IPantalla{
 	@Override
 	public void pintarPantalla(Graphics g) {
 		rellenarFondo(g);
-		g.setColor(new Color(255, 204, 0, 255));
-		g.setFont(new Font("Arial", Font.BOLD, 30));
-		g.drawString("HAS PERDIDO!", panelJuego.getWidth()/2-125, panelJuego.getHeight()/2+250);
+		g.setColor(new Color(255, 0, 0, 255));
+		g.setFont(new Font("Arial", Font.BOLD, 50));
+		g.drawString("HAS PERDIDO!", panelJuego.getWidth()/2-175, panelJuego.getHeight()/2);
 	}
 
 	@Override

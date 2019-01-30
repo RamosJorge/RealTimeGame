@@ -89,7 +89,7 @@ public class PantallaJuego implements IPantalla, KeyListener{
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.drawString("Puntuación: "+Integer.toString(puntuacion), panelJuego.getWidth()-150, panelJuego.getHeight()-20);
 		g.drawString("Puntuación: "+Integer.toString(puntuacionEnemigo), 20, 20);
-		timerCurrent+=0.05;
+		//timerCurrent+=0.02;
 		if (timerCurrent >= timerTotal) {
 			if (disparoEnemigo == null) {
 				disparoEnemigo = new Sprite2D(16, 40, (int)tankEnemigo.getPosX()+tankEnemigo.getAncho()/2-8, (int)tankEnemigo.getPosY()+tankEnemigo.getAlto()/2-20, (int)(10*Math.cos(Math.toRadians(canonEnemyAngle-90))), (int)(10*Math.sin(Math.toRadians(canonEnemyAngle-90))), "Recursos/PNG/Bullets/bulletRed.png");

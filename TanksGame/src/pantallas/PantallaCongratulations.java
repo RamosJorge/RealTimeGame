@@ -41,7 +41,7 @@ public class PantallaCongratulations implements IPantalla{
 		rellenarFondo(g);
 		g.setColor(new Color(255, 0, 0, 255));
 		g.setFont(new Font("Arial", Font.BOLD, 30));
-		g.drawString("LO HAS CONSEGUIDO. ENHORABUENA!", panelJuego.getWidth()/2-300, panelJuego.getHeight()/2);
+		g.drawString("LO HAS CONSEGUIDO. ENHORABUENA!", panelJuego.getWidth()/2-250, panelJuego.getHeight()/2);
 	}
 
 	@Override
