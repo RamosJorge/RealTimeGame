@@ -2,7 +2,6 @@ package base;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
@@ -12,6 +11,12 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 
+/**
+ * Clase Sprite2D. En ella se opera con el sprite.
+ * @author jorgeramosgil
+ * @version 1.0
+ * @since 1.0
+ */
 public class Sprite2D implements ImageObserver {
 	
 	private BufferedImage buffer;
@@ -23,6 +28,7 @@ public class Sprite2D implements ImageObserver {
 	private int velocidadX;
 	private int velocidadY;
 	private String url;
+	// Variable necesaria para aplicar transformacion a los sprites
 	private AffineTransform transform = new AffineTransform();
 
 	public Sprite2D(int ancho, int alto, int posX, int posY, String url) {
@@ -55,6 +61,9 @@ public class Sprite2D implements ImageObserver {
 		actualizarBuffer();
 	}
 	
+	/**
+	 * Actualiza el buffer del sprite
+	 */
 	public void actualizarBuffer(){
 		buffer = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = buffer.getGraphics();
@@ -69,6 +78,11 @@ public class Sprite2D implements ImageObserver {
 		}
 	}
 
+	/**
+	 * Método que permite que los sprites no rebasen los límites de la pantalla
+	 * @param anchoMundo
+	 * @param altoMundo
+	 */
 	public void moverSprite(int anchoMundo, int altoMundo){
 		if(posX >= anchoMundo - ancho) {
 			velocidadX = -1  * Math.abs(velocidadX);
@@ -86,6 +100,11 @@ public class Sprite2D implements ImageObserver {
 		posY = (float) (posY + velocidadY);
 	}
 	
+	/**
+	 * Método que permite el movimiento del cañón del tanque enemigo
+	 * @param anchoMundo
+	 * @param altoMundo
+	 */
 	public void moverSpriteCanon(int anchoMundo, int altoMundo){
 		if(posX >= anchoMundo -20 - ancho) {
 			velocidadX = -1  * Math.abs(velocidadX);
@@ -103,11 +122,19 @@ public class Sprite2D implements ImageObserver {
 		posY = (float) (posY + velocidadY);
 	}
 	
+	/**
+	 * Método que permite movr los disparos por la pantalla
+	 */
 	public void moverDisparo() {
 		posX = (float) (posX + velocidadX);
 		posY = (float) (posY + velocidadY);
 	}
 	
+	/**
+	 * Método que permite comprobar las colisiones entre los distintos sprites
+	 * @param otro
+	 * @return
+	 */
 	public boolean colisiona(Sprite2D otro) {
 
 		boolean colisionEjeX = false;
@@ -133,6 +160,11 @@ public class Sprite2D implements ImageObserver {
 		return colisionEjeX && colisionEjeY;
 	}
 	
+	/**
+	 * Método que permite pintar un sprite en el mundo y rotarlo
+	 * @param g
+	 * @param angulo
+	 */
 	public void pintarSpriteEnMundo(Graphics g, int angulo){
 		Graphics2D g2d = (Graphics2D) g;
 		transform.setToTranslation(posX, posY);
@@ -140,6 +172,11 @@ public class Sprite2D implements ImageObserver {
 		g2d.drawImage(buffer, transform, this);
 	}
 	
+	/**
+	 * Método que permite pintar y rotar el sprite cañon
+	 * @param g
+	 * @param angulo
+	 */
 	public void pintarSpriteEnMundo2(Graphics g, int angulo){
 		Graphics2D g2d = (Graphics2D) g;
 		transform.setToTranslation(posX, posY);
@@ -147,6 +184,10 @@ public class Sprite2D implements ImageObserver {
 		g2d.drawImage(buffer, transform, this);
 	}
 	
+	/**
+	 * Método que permite pintar el sprite disparo en la pantalla
+	 * @param g
+	 */
 	public void pintarDisparoEnMundo(Graphics2D g){
 		g.rotate(Math.toRadians(30), 50, 50);
 		g.drawImage(buffer, (int)posX, (int)posY, null);
@@ -215,7 +256,6 @@ public class Sprite2D implements ImageObserver {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
 
 	@Override
 	public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {

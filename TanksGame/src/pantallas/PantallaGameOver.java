@@ -16,6 +16,12 @@ import javax.imageio.ImageIO;
 import base.PanelJuego;
 import base.IPantalla;
 
+/**
+ * Clase PantallaGameOver. En ella se muestra la pantalla de game over.
+ * @author jorgeramosgil
+ * @version 1.0
+ * @since 1.0
+ */
 public class PantallaGameOver implements IPantalla{
 
 	PanelJuego panelJuego;
@@ -27,6 +33,9 @@ public class PantallaGameOver implements IPantalla{
 		this.panelJuego = panelJuego;
 	}
 	
+	/**
+	 * Método que carga la imagen de fondo
+	 */
 	@Override
 	public void inicializarPantalla() {
 		try {
@@ -37,6 +46,9 @@ public class PantallaGameOver implements IPantalla{
 		rescaleImage();
 	}
 
+	/**
+	 * Método que rellena el fondo y muestra el texto
+	 */
 	@Override
 	public void pintarPantalla(Graphics g) {
 		rellenarFondo(g);
@@ -55,6 +67,9 @@ public class PantallaGameOver implements IPantalla{
 		
 	}
 
+	/**
+	 * Mñetodo que vuelve a la pantalla de juego cuando hacemos click
+	 */
 	@Override
 	public void pulsarRaton(MouseEvent e) {
 		PantallaJuego pantallaJuego = new PantallaJuego(panelJuego);
@@ -66,9 +81,18 @@ public class PantallaGameOver implements IPantalla{
 	public void redimensionarPantalla(ComponentEvent e) {
 		
 	}
+	
+	/**
+	 * Método que dibuja la imagen de fondo reescalada
+	 * @param g
+	 */
 	private void rellenarFondo(Graphics g){
 		g.drawImage(rescaledImage, 0, 0, null);
 	}
+	
+	/**
+	 * Método que reescala la imagen de fondo
+	 */
 	public void rescaleImage() {
 		rescaledImage = image.getScaledInstance(800, 600, Image.SCALE_SMOOTH);
 	}

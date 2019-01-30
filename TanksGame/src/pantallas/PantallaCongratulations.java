@@ -15,6 +15,12 @@ import javax.imageio.ImageIO;
 import base.PanelJuego;
 import base.IPantalla;
 
+/**
+ * Clase PantallaCongratulations. En ella se muestra la pantalla de victoria.
+ * @author jorgeramosgil
+ * @version 1.0
+ * @since 1.0
+ */
 public class PantallaCongratulations implements IPantalla{
 
 	PanelJuego panelJuego;
@@ -26,6 +32,9 @@ public class PantallaCongratulations implements IPantalla{
 		this.panelJuego = panelJuego;
 	}
 	
+	/**
+	 * Método que carga la imagen de fondo
+	 */
 	@Override
 	public void inicializarPantalla() {
 		try {
@@ -36,6 +45,9 @@ public class PantallaCongratulations implements IPantalla{
 		rescaleImage();
 	}
 
+	/**
+	 * Método que rellena el fondo y muestra los textos
+	 */
 	@Override
 	public void pintarPantalla(Graphics g) {
 		rellenarFondo(g);
@@ -54,6 +66,9 @@ public class PantallaCongratulations implements IPantalla{
 		
 	}
 
+	/**
+	 * Método que nos devuelve a la pantalla de juego cuando hacemos click
+	 */
 	@Override
 	public void pulsarRaton(MouseEvent e) {
 		PantallaJuego pantallaJuego = new PantallaJuego(panelJuego);
@@ -65,9 +80,18 @@ public class PantallaCongratulations implements IPantalla{
 	public void redimensionarPantalla(ComponentEvent e) {
 		
 	}
+	
+	/**
+	 * Método que rellena el fondo con la imgagen reescalada
+	 * @param g
+	 */
 	private void rellenarFondo(Graphics g){
 		g.drawImage(rescaledImage, 0, 0, null);
 	}
+	
+	/**
+	 * Método que reescala la imagen de fondo
+	 */
 	public void rescaleImage() {
 		rescaledImage = image.getScaledInstance(800, 600, Image.SCALE_SMOOTH);
 	}

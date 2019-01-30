@@ -12,6 +12,12 @@ import javax.swing.JPanel;
 
 import pantallas.PantallaInicial;
 
+/**
+ * Clase PanelJuego. Base de cualquier pantalla.
+ * @author jorgeramosgil
+ * @version 1.0
+ * @since 1.0
+ */
 public class PanelJuego extends JPanel implements Runnable, MouseListener, ComponentListener, MouseMotionListener{
 
 	private static final long serialVersionUID = 1L;
